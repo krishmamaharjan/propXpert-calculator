@@ -1,9 +1,6 @@
 import React from 'react'
+  
+    export default function about() { 
+ return <h1>hellooooo worldd</h1>
 
-const page = () => {
-  return (
-    <div>page hello world</div>
-  )
 }
-
-export default page
