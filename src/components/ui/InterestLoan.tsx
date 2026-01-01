@@ -70,6 +70,8 @@ const InterestLoan = () => {
         depreciation: 0
     });
 
+    const capitalPresentEquity = Number(formData.propertyValue) - Number(formData.loanAmount);
+
     const handleChange = (key: keyof typeof assumptions, value: string) => {
         // const numericValue = Number(value.replace(/[^0-9.]/g, "")) || 0
 
@@ -206,19 +208,19 @@ const InterestLoan = () => {
 
                                 {/* Present value */}
                                 <td className='border p-2'>
-                                    {/* Acquisition cost */}
+                                    
                                     {cat.title === "Acquisition Costs" && (
                                         <div>
-                                            ${totalAcquisition.toLocaleString()}
+                                            <p>${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                         </div>
                                     )}
 
                                     <td>
                                         {cat.title === "Capital Growth" && (
                                             <div className='space-y-2'>
-                                                <p>${Number(formData.propertyValue).toLocaleString()}</p>
-                                                <p>${Number(formData.loanAmount).toLocaleString()}</p>
-                                                <p>${Number(formData.propertyValue) - Number(formData.loanAmount)}</p>
+                                                <p>${Number(formData.propertyValue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                <p>${Number(formData.loanAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                <p>${capitalPresentEquity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                             </div>
                                         )}
 
@@ -387,9 +389,9 @@ const InterestLoan = () => {
 
                                             {cat.title === "Capital Growth" && (
                                                 <div className='space-y-2'>
-                                                    <p>${propertyValueYear.toLocaleString()}</p>
-                                                    <p>${loanAmount.toLocaleString()}</p>
-                                                    <p>${equity.toLocaleString()}</p>
+                                                    <p>${propertyValueYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                    <p>${loanAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                    <p>${equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                 </div>
                                             )}
 
@@ -397,7 +399,7 @@ const InterestLoan = () => {
 
                                             {cat.title === "Income" && (
                                                 <div className='space-y-2'>
-                                                    <p>${grossRentYear.toFixed(2).toLocaleString()}</p>
+                                                    <p>${grossRentYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                 </div>
                                             )}
@@ -429,7 +431,7 @@ const InterestLoan = () => {
 
                                                     <p>${interestedCharge.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
-                                                    <p>${rentalExpensesYear.toLocaleString()}</p>
+                                                    <p>${rentalExpensesYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                     <p></p>
 
@@ -450,7 +452,7 @@ const InterestLoan = () => {
                                                 <div className='px-4'>
 
 
-                                                    <p>{estimateEquity.toLocaleString()}</p>
+                                                    <p>${estimateEquity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
 
                                                     <input

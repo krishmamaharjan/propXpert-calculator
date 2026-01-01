@@ -205,15 +205,15 @@ const PrincipalInterestLoan = () => {
                                     {/* Acquisition cost */}
                                     {cat.title === "Acquisition Costs" && (
                                         <div>
-                                            ${totalAcquisition}
+                                            ${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                         </div>
                                     )}
 
                                     <td>
                                         {cat.title === "Capital Growth" && (
                                             <div className='space-y-2'>
-                                                <p>${Number(formData.propertyValue).toLocaleString()}</p>
-                                                <p>${Number(formData.loanAmount).toLocaleString()}</p>
+                                                <p>${Number(formData.propertyValue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                <p>${Number(formData.loanAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                 <p>${Number(formData.propertyValue) - Number(formData.loanAmount)}</p>
                                             </div>
                                         )}
@@ -223,7 +223,7 @@ const PrincipalInterestLoan = () => {
                                     <td>
                                         {cat.title === "Income" && (
                                             <div className='space-y-2'>
-                                                <p>${grossRentValue.toLocaleString()}</p>
+                                                <p>${grossRentValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                             </div>
                                         )}
@@ -283,7 +283,7 @@ const PrincipalInterestLoan = () => {
                                     return (
                                         <td key={i} className='border w-20 py-2 text-center'>
 
-                                            {cat.title === "Key assumptions" && (
+                                            {/* {cat.title === "Key assumptions" && (
                                                 <div className='flex flex-col gap-1 items-center justify-center '>
                                                     <input
                                                         type="number"
@@ -310,7 +310,6 @@ const PrincipalInterestLoan = () => {
 
                                                         <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
                                                             <span>$</span>
-                                                            {/* <span>{assumptions.employmentIncome.toFixed(2) || Number(formData.income)}</span> */}
                                                             <span>{`${formData.income ? formData.income : assumptions.employmentIncome}`}</span>
 
                                                         </div>
@@ -326,16 +325,106 @@ const PrincipalInterestLoan = () => {
                                                         />
                                                     </div>
                                                 </div>
+                                            )} */}
+
+                                            {cat.title === "Key assumptions" && (
+                                                <div className='flex flex-col gap-1 items-center justify-center '>
+
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+
+                                                            <span>{assumptions.capitalGrowthRate || "0.00"}</span>
+                                                            <span>%</span>
+                                                        </div>
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+
+                                                            value={assumptions.capitalGrowthRate}
+                                                            onChange={(e) => handleChange("capitalGrowthRate", e.target.value)}
+                                                            placeholder="Cap Growth"
+                                                        />
+                                                    </div>
+
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+
+                                                            <span>{assumptions.rentalGrowthRate || "0.00"}</span>
+                                                            <span>%</span>
+                                                        </div>
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+
+                                                            value={assumptions.rentalGrowthRate}
+                                                            onChange={(e) => handleChange("rentalGrowthRate", e.target.value)}
+                                                            placeholder="Rental Growth"
+                                                        />
+                                                    </div>
+
+
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+
+                                                            <span>{assumptions.inflationRate || "0.00"}</span>
+                                                            <span>%</span>
+                                                        </div>
+
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+                                                            value={assumptions.inflationRate}
+                                                            onChange={(e) =>
+                                                                handleChange("inflationRate", e.target.value)
+                                                            }
+                                                            placeholder="0.00"
+                                                        />
+                                                    </div>
+
+
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+                                                            <span>$</span>
+                                                            <span>{`${formData.income ? Number(formData.income).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : assumptions.employmentIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</span>
+                                                        </div>
+
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+                                                            value={`$${formData.income ? formData.income : assumptions.employmentIncome}`}
+                                                            onChange={(e) =>
+                                                                handleChange("employmentIncome", e.target.value)
+                                                            }
+                                                            placeholder="0.00"
+                                                        />
+                                                    </div>
+
+
+                                                    {/* <input
+                                                                                                    type="number"
+                                                                                                    className='w-16 border border-blue-300 py-1 rounded-lg text-center'
+                                                                                                    value={`$${formData.income ? formData.income : assumptions.employmentIncome}`}
+                                                                                                    onChange={(e) => {
+                                                                                                        const numericValue = Number(e.target.value.replace(/[^0-9.]/g, "")) || 0;
+                                                                                                        handleChange("employmentIncome", numericValue.toString());
+                                                                                                    }}
+                                                                                                    placeholder="Employment income"
+                                                                                                /> */}
+                                                </div>
                                             )}
 
                                             {cat.title === "Capital Growth" && (
                                                 <div className='space-y-2'>
-                                                    <p>${propertyValueYear.toLocaleString()}</p>
+                                                    <p>${propertyValueYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                     {/* <p>{PrincipalLoan.toLocaleString()}</p> */}
-                                                    <p>${remainingLoanBalance.toLocaleString()}</p>
+                                                    <p>${remainingLoanBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                     {/* <p>{monthlyRepaymentValue.toLocaleString()}</p> */}
                                                     {/* <p>${remainingLoanBalance.toLocaleString()}</p> */}
-                                                    <p>${equity.toLocaleString()}</p>
+                                                    <p>${equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                 </div>
                                             )}
 
@@ -343,7 +432,7 @@ const PrincipalInterestLoan = () => {
 
                                             {cat.title === "Income" && (
                                                 <div className='space-y-2'>
-                                                    <p>${grossRentYear.toFixed(2).toLocaleString()}</p>
+                                                    <p>${grossRentYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                 </div>
                                             )}
@@ -353,12 +442,12 @@ const PrincipalInterestLoan = () => {
                                             {cat.title === "Cash Deduction" && (
                                                 <div className='space-y-2'>
                                                     {/* <p>${grossRentYear.toFixed(2).toLocaleString()}</p> */}
-                                                    <p>${loanYear.principalYear.toLocaleString()}</p>
+                                                    <p>${loanYear.principalYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
-                                                    <p>${loanYear.extraPrincipalYear.toLocaleString()}</p>
+                                                    <p>${loanYear.extraPrincipalYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
 
-                                                    <div className='px-4'>
+                                                    {/* <div className='px-4'>
                                                         <input
                                                             type="text"
                                                             className='w-24 border border-blue-300 rounded-lg py-1 text-center'
@@ -366,7 +455,23 @@ const PrincipalInterestLoan = () => {
                                                             onChange={(e) => handleChange("offsetAmount", e.target.value)}
                                                             placeholder="OA"
                                                         />
-                                                    </div>
+                                                    </div> */}
+                                                    {/* <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+                                                            <span>$</span>
+                                                            <span>{assumptions.offsetAmount || "0.00"}</span>
+                                                            
+                                                        </div>
+
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+                                                            value={`${assumptions.offsetAmount}`}
+                                                            onChange={(e) => handleChange("offsetAmount", e.target.value)}
+                                                            placeholder="0.00"
+                                                        />
+                                                    </div> */}
 
                                                     <div className='px-4'>
                                                         <input
@@ -399,7 +504,7 @@ const PrincipalInterestLoan = () => {
 
                                             {cat.title === "Estimate" && (
                                                 <div className='px-4'>
-                                                    <p>{estimateEquity.toLocaleString()}</p>
+                                                    <p>{estimateEquity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                     <input
                                                         type="text"
