@@ -109,8 +109,14 @@ export default function InterestLineChart({
                 scales: {
                     x: {
                         title: {
-                            display: true,
+                            display: false,
                             text: "Year",
+                        },
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 6,
+                            maxRotation: 0,
+                            minRotation: 0,
                         },
                         grid: {
                             display: false,
@@ -118,12 +124,22 @@ export default function InterestLineChart({
                     },
                     y: {
                         title: {
-                            display: true,
+                            display: false,
                             text: "Value",
                         },
+                        // ticks: {
+                        //     callback: (value) => `$${Number(value).toLocaleString()}`,
+                        // },
                         ticks: {
-                            callback: (value) => `$${Number(value).toLocaleString()}`,
-                        },
+                            callback: (value) => {
+                                const num = Number(value);
+                                if (Math.abs(num) >= 1_000_000)
+                                    return `$${(num / 1_000_000).toFixed(1)}M`;
+                                if (Math.abs(num) >= 1_000)
+                                    return `$${(num / 1_000).toFixed(0)}K`;
+                                return `$${num}`;
+                            },
+                        }
                     },
                 },
             },

@@ -63,7 +63,7 @@ export const InvestorProvider = ({ children }: { children: ReactNode }) => {
     const [formData, setFormData] = useState({
         streetAddress: "usa",
         state: "nsw",
-        postcode: "12345",
+        postcode: "10000",
         propertyValue: "600000",
         weeklyRent: "520",
 
@@ -74,7 +74,7 @@ export const InvestorProvider = ({ children }: { children: ReactNode }) => {
 
         loanAmount: "480000",
         interestRate: "6.25",
-        loanTerm: "30",
+        loanTerm: "10",
 
         loanType: 'IO' as 'IO' | 'PI',
 

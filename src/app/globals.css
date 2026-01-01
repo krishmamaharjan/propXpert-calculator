@@ -3,12 +3,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #002927;
-  --secondary: #0BAF88;
+  --primary: #0775B8;
+  --secondary: #4C50E8;
+  --background2: #DFF5FF;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background2: var(--background2);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);

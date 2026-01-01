@@ -43,14 +43,15 @@ const Investor = () => {
 
     return (
         <InvestorProvider >
-            <div className='h-screen flex overflow-hidden'>
-                <div className='w-1/3 bg-zinc-300 h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'>
+            <div className='min-h-screen md:h-screen flex flex-col  md:flex-row overflow-hidden'>
+                <div className='w-full md:w-1/3 bg-zinc-50 h-full md:overflow-y-auto md:[&::-webkit-scrollbar]:hidden d:[-ms-overflow-style:none] md:[scrollbar-width:none]'>
                     <Leftbar />
                 </div>
 
-                <div className='w-2/3 overflow-y-auto'>
+                <div className='w-full md:h-screen md:w-2/3 md:overflow-y-auto'>
                     <Rightbar />
                 </div>
+                
             </div>
         </InvestorProvider>
     )
