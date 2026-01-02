@@ -262,7 +262,7 @@ const PrincipalInterestLoan = () => {
 
                                         <div>
                                             {cat.title === "Income" && (
-                                                <div className='space-y-2'>
+                                                <div className='pt-12'>
                                                     <p>${grossRentValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                 </div>
@@ -415,7 +415,7 @@ const PrincipalInterestLoan = () => {
                                                 {/* gross rent */}
 
                                                 {cat.title === "Income" && (
-                                                    <div className='space-y-2'>
+                                                    <div className='mt-12'>
                                                         <p>${grossRentYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                     </div>
@@ -424,40 +424,14 @@ const PrincipalInterestLoan = () => {
                                                 {/* offset */}
 
                                                 {cat.title === "Cash Deduction" && (
-                                                    <div className='space-y-2 flex flex-col gap-2 mt-12  items-center justify-center'>
+                                                    <div className='flex flex-col space-y-4 mt-16  items-center justify-center'>
                                                         {/* <p>${grossRentYear.toFixed(2).toLocaleString()}</p> */}
                                                         <p>${loanYear.principalYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
-                                                        <p>${loanYear.extraPrincipalYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                        <p className='-mb-4'>${loanYear.extraPrincipalYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
 
-                                                        {/* <div className='px-4'>
-                                                        <input
-                                                            type="text"
-                                                            className='w-24 border border-blue-300 rounded-lg py-1 text-center'
-                                                            value={`${assumptions.offsetAmount}`}
-                                                            onChange={(e) => handleChange("offsetAmount", e.target.value)}
-                                                            placeholder="OA"
-                                                        />
-                                                    </div> */}
-                                                        {/* <div className="relative w-24">
-
-                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
-                                                            <span>$</span>
-                                                            <span>{assumptions.offsetAmount || "0.00"}</span>
-                                                            
-                                                        </div>
-
-                                                        <input
-                                                            type="number"
-                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
-                                                            value={`${assumptions.offsetAmount}`}
-                                                            onChange={(e) => handleChange("offsetAmount", e.target.value)}
-                                                            placeholder="0.00"
-                                                        />
-                                                    </div> */}
-
-                                                        <div className='px-4'>
+                                                        <div className='mt-14'>
                                                             <input
                                                                 type="text"
                                                                 className='w-24 border border-blue-300 rounded-lg py-1 text-center'
@@ -467,9 +441,9 @@ const PrincipalInterestLoan = () => {
                                                             />
                                                         </div>
 
-                                                        <p>${interestedCharge.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                        <p className=''>${interestedCharge.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
-                                                        <p>${rentalExpensesYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                        <p className='mt-2'>${rentalExpensesYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                         <p></p>
 
