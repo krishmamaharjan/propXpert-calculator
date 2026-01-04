@@ -12,18 +12,13 @@ const Rightbar = () => {
 
     return (
         <div className='px-2 md:px-12 md:mt-0'>
-            {/* <div className='flex gap-4 justify-end py-4 px-4'>
-                <Button text='New' primary />
-                <Button text='Share' secondary />
-            </div> */}
+            
 
             {/* <pre className="">
                 {JSON.stringify(formData, null, 2)}
             </pre> */}
 
-            {/* <div className='flex items-center md:h-screen sticky top-0  md:fixed md:bg-white w-full pt-12 pb-4 md:z-50'> */}
-            {/* <div className='flex items-center md:sticky md:top-0 md:left-0 bg-white pt-12 pb-4 md:z-50'> */}
-            <div className='flex items-center
+            <div className='flex items-center justify-end
                 bg-white
                 py-4
                 md:pt-12

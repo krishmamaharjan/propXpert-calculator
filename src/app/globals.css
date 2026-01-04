@@ -8,6 +8,7 @@ body {
   --background: #ffffff;
   --foreground: #171717;
   --secondary: #0775B8;
+  --secondary2: #DFF5FF;
   /* --secondary: #4C50E8; */
   --primary: #032D5F;
   --background2: #DFF5FF;
@@ -19,6 +20,7 @@ body {
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-secondary2: var(--secondary2);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

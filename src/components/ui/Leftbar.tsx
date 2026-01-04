@@ -6,10 +6,10 @@ import Image from 'next/image';
 const Leftbar = () => {
 
     const [propertyOpen, setPropertyOpen] = useState(true);
-    const [IncomeOpen, setIncomeOpen] = useState(true);
-    const [costOpen, setCostOpen] = useState(true);
-    const [acquisitionOpen, setAcquisitionOpen] = useState(true);
-    const [annualHoldingOpen, setAnnualHoldingOpen] = useState(true);
+    const [IncomeOpen, setIncomeOpen] = useState(false);
+    const [costOpen, setCostOpen] = useState(false);
+    const [acquisitionOpen, setAcquisitionOpen] = useState(false);
+    const [annualHoldingOpen, setAnnualHoldingOpen] = useState(false);
 
     const { formData, setFormData, depositValue, stampDutyValue, totalAcquisition, lvrValue, grossYieldValue } = useInvestor();
 
@@ -70,77 +70,69 @@ const Leftbar = () => {
     };
 
     return (
-        <div className='w-full h-full md:h-500 pb-4 md:pb-0'>
-            <div className='py-6 px-6 bg-primary text-white md:sticky md:left-0 md:top-0 z-100'>
-                <Image 
-                    src="/propsWhiteLogo.webp"
-                    width={100}
-                    height={100}
-                    alt="propexpert logo"
-                />
-            </div>
-
-            <div className='px-6 pt-6 space-y-2'>
-                <h1 className=' font-semibold text-xl'>Property Details</h1>
-                <div className='bg-white rounded-xl'>
+        <div className='w-full h-full md:h-500 pb-4 md:pb-0 pt-12 space-y-4'>
+            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+                {/* <h1 className=' font-semibold'>Property Details</h1> */}
+                <div className=' rounded-xl'>
 
                     <div
                         onClick={() => setPropertyOpen(prev => !prev)}
-                        className='flex items-center justify-between bg-primary text-white py-4 px-4'
+                        className='flex items-center justify-between text-black'
                     >
-                        <h1 className='text-xl'>Property Details</h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
+                        <h1 className='text-sm'>Property Details</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
                     </div>
+                    
                     {
                         (propertyOpen &&
-                            <form action="" className='px-4 py-4 space-y-4'>
+                            
+                            <form action="" className=' space-y-4'>
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Street Address</label>
+                                    <label htmlFor="" className='text-xs text-secondary'>Street Address</label>
                                     <input
                                         type="text"
-                                        className='rounded-sm border border-primary w-full py-2 px-2'
+                                        className='w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={formData.streetAddress}
                                         onChange={(e) => setFormData({ ...formData, streetAddress: e.target.value })}
                                     />
                                 </div>
 
-                                <div className='flex w-full gap-2'>
-                                    <div className='w-1/2'>
-                                        <label htmlFor="" className=' text-zinc-500'>State</label>
-                                        <select className='rounded-sm border border-primary w-full py-2 px-2'
-                                            value={formData.state}
-                                            onChange={handleStateChange}
-                                        >
-                                            <option >Select State</option>
-                                            {Object.keys(statePostcodeRanges).map((state) => (
-                                                <option key={state} value={state}>{state}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    <div className='w-1/2'>
-                                        <label htmlFor="" className=' text-zinc-500'>Postcode</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
-                                            value={formData.postcode}
-                                            // onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
-                                            onChange={handlePostcodeChange}
-                                        />
-                                        {error && <p className="text-red-500  mt-1">{error}</p>}
+                                <div >
+                                    <label htmlFor="" className=' text-xs text-secondary'>State</label>
+                                    <select className=' w-full py-1 px-1 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
+                                        value={formData.state}
+                                        onChange={handleStateChange}
+                                    >
+                                        <option>Select State</option>
+                                        {Object.keys(statePostcodeRanges).map((state) => (
+                                            <option key={state} value={state}>{state}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div >
+                                    <label htmlFor="" className=' text-xs text-secondary'>Postcode</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
+                                        value={formData.postcode}
+                                        // onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
+                                        onChange={handlePostcodeChange}
+                                    />
+                                    {error && <p className="text-red-500  mt-1">{error}</p>}
 
-                                    </div>
                                 </div>
 
+
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Property Type</label>
-                                    <select className='rounded-sm border border-primary w-full py-2 px-2'>
+                                    <label htmlFor="" className=' text-xs text-secondary'>Property Type</label>
+                                    <select className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'>
                                         <option >Residential</option>
                                         <option >Commercial</option>
                                         <option >Land</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Property Value</label>
+                                    <label htmlFor="" className=' text-xs text-secondary'>Property Value</label>
                                     <input
-                                        type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={formData.propertyValue}
                                         onChange={(e) => setFormData({ ...formData, propertyValue: e.target.value })}
                                     />
@@ -148,22 +140,22 @@ const Leftbar = () => {
 
                                 <div className='flex gap-2'>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Weekly Rent</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Weekly Rent</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.weeklyRent}
                                             onChange={(e) => setFormData({ ...formData, weeklyRent: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Gross Yield</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Gross Yield</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={grossYieldValue.toFixed(2) + '%'}
                                         />
                                         {/* <p>{grossYieldValue.toFixed(2)}%</p> */}
                                     </div>
                                 </div>
 
-                                {/* <div className='mt-6 bg-gray-50 p-4 rounded-lg space-y-2'>
+                                {/* <div className='mt-6 bg-gray-50 p-4  space-y-2'>
                                     <p>Deposit: ${depositValue.toLocaleString()}</p>
                                     <p>LVR: {lvrValue.toFixed(2)}%</p>
                                     <p>Gross Yield: {grossYieldValue.toFixed(2)}%</p>
@@ -178,19 +170,20 @@ const Leftbar = () => {
                 </div>
             </div>
 
-            <div className='px-6 pt-4 space-y-2'>
-                <h1 className='font-semibold text-xl'>Income</h1>
-                <div className='bg-white rounded-xl '>
-                    <div className='flex items-center justify-between bg-primary text-white py-4 px-4'
+
+            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+                {/* <h1 className='font-semibold'>Income</h1> */}
+                <div className=' rounded-xl '>
+                    <div className='flex items-center justify-between   text-sm text-black '
                         onClick={() => setIncomeOpen(prev => !prev)}
 
                     >
-                        <h1 className=''>Individual Income</h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
+                        <h1 className='text-md'>Individual Income</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
                     </div>
 
                     {(IncomeOpen &&
-                        <form action="" className='px-4 py-4 space-y-4'>
+                        <form action="" className=' space-y-4'>
                             {/* <div className='flex justify-between items-center'>
                                 <p className=' pt-4'>Self-Managed Superfund</p>
                                 <p>toggle</p>
@@ -198,16 +191,16 @@ const Leftbar = () => {
 
 
                             <div>
-                                <label htmlFor="" className=' text-zinc-500'>Employment Income</label>
-                                <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                <label htmlFor="" className=' text-xs text-secondary'>Employment Income</label>
+                                <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                     value={formData.income}
                                     onChange={(e) => setFormData({ ...formData, income: e.target.value })}
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="" className=' text-zinc-500'>Other taxable income</label>
-                                <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                <label htmlFor="" className=' text-xs text-secondary'>Other taxable income</label>
+                                <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                     value={formData.taxIncome}
                                     onChange={(e) => setFormData({ ...formData, taxIncome: e.target.value })}
                                 />
@@ -217,33 +210,36 @@ const Leftbar = () => {
                 </div>
             </div>
 
-            <div className='px-6 pt-4 space-y-2'>
-                <h1 className=' font-semibold text-lg'>Property Costs</h1>
-                <div className='bg-white rounded-xl'>
-                    <div className='flex items-center justify-between bg-primary text-white py-4 px-4'
+            
+
+
+            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+                {/* <h1 className='font-semibold'>Property Costs</h1> */}
+                <div className=' rounded-xl'>
+                    <div className='flex items-center justify-between   text-black text-sm '
                         onClick={() => setCostOpen(prev => !prev)}
                     >
-                        <h1 className=''>Funding Structure</h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
+                        <h1 className='text-md'>Funding Structure</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
                     </div>
                     {
                         (costOpen &&
-                            <form action="" className='px-4 py-4 space-y-4'>
+                            <form action="" className=' space-y-4'>
                                 <div className='flex gap-2'>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Loan Amount</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Loan Amount</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.loanAmount}
                                             onChange={(e) => setFormData({ ...formData, loanAmount: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>LVR</label>
+                                        <label htmlFor="" className=' text-xs text-secondary'>LVR</label>
                                         <input
                                             value={lvrValue.toFixed(2) + "%"}
                                             readOnly
                                             type="text"
-                                            className='rounded-sm border border-primary w-full py-2 px-2'
+                                            className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         />
 
                                     </div>
@@ -251,16 +247,16 @@ const Leftbar = () => {
 
                                 <div className='flex gap-2'>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Interest Rate</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Interest Rate</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.interestRate}
                                             onChange={(e) => setFormData({ ...formData, interestRate: e.target.value })}
                                         />
 
                                     </div>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Loan Term</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Loan Term</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.loanTerm}
                                             onChange={(e) => setFormData({ ...formData, loanTerm: e.target.value })}
                                         />
@@ -269,11 +265,11 @@ const Leftbar = () => {
                                 </div>
 
                                 <hr className='my-6 text-zinc-200 ' />
-                                <h1>Lenders Mortgage Insurance</h1>
+                                <h1 className='text-sm'>Lenders Mortgage Insurance</h1>
 
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>LMI Premium (Varies by Bank)</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>LMI Premium (Varies by Bank)</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={lmi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                         readOnly
                                     // onChange={(e) => setFormData({ ...formData, lmi: e.target.value })}
@@ -281,8 +277,8 @@ const Leftbar = () => {
 
                                 </div>
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Additional Stamp Duty on LMI</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Additional Stamp Duty on LMI</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         // value={`$${stampDutyValue.toLocaleString()}`}
                                         readOnly
                                     // onChange={(e) => setFormData({ ...formData, stampDuty: e.target.value })}
@@ -298,20 +294,22 @@ const Leftbar = () => {
                 </div>
             </div>
 
-            <div className='px-6 pt-6'>
-                <div className='bg-white rounded-xl'>
-                    <div className='flex items-center justify-between bg-primary text-white py-4 px-4'
+            
+
+            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+                <div className=' rounded-xl'>
+                    <div className='flex items-center justify-between  text-sm text-black '
                         onClick={() => setAcquisitionOpen(prev => !prev)}
                     >
-                        <h1 className=''>Acquisition Costs</h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
+                        <h1 className='text-md'>Acquisition Costs</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
                     </div>
                     {
                         (acquisitionOpen &&
-                            <form action="" className='px-4 py-4 space-y-4'>
+                            <form action="" className=' space-y-4'>
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Deposit</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Deposit</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={`${depositValue.toLocaleString()}`}
                                         readOnly
                                     />
@@ -319,18 +317,18 @@ const Leftbar = () => {
 
 
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Build & Pest Inspection</label>
+                                    <label htmlFor="" className=' text-xs text-secondary'>Build & Pest Inspection</label>
                                     <input
                                         type="text"
-                                        className='rounded-sm border border-primary w-full py-2 px-2'
+                                        className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={formData.inspection}
                                         onChange={(e) => setFormData({ ...formData, inspection: e.target.value })}
 
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Stamp Duty</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Stamp Duty</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={`$${stampDutyValue.toLocaleString()}`}
                                         readOnly
                                     />
@@ -338,8 +336,8 @@ const Leftbar = () => {
 
 
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Conveyancing Fees</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Conveyancing Fees</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={formData.conveyancingFees}
                                         onChange={(e) => setFormData({ ...formData, conveyancingFees: e.target.value })}
 
@@ -347,24 +345,24 @@ const Leftbar = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Transfer Registration Fee</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Transfer Registration Fee</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={formData.transferFees}
                                         onChange={(e) => setFormData({ ...formData, transferFees: e.target.value })}
 
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Miscellaneous costs</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Miscellaneous costs</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={formData.miscellaneousCosts}
                                         onChange={(e) => setFormData({ ...formData, miscellaneousCosts: e.target.value })}
 
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Total Acquisition</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Total Acquisition</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={`$${(totalAcquisition).toLocaleString()}`}
                                         readOnly
                                     />
@@ -377,20 +375,23 @@ const Leftbar = () => {
                 </div>
             </div>
 
-            <div className='px-6 pt-6 space-y-2'>
-                <div className='bg-white rounded-xl'>
-                    <div className='flex items-center justify-between bg-primary text-white py-4 px-4'
+            
+
+
+            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+                <div className=' rounded-xl'>
+                    <div className='flex items-center justify-between text-sm text-black '
                         onClick={() => setAnnualHoldingOpen(prev => !prev)}
                     >
-                        <h1 className=''>Annual Holding Costs</h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
+                        <h1 className='text-md'>Annual Holding Costs</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
                     </div>
                     {
                         (annualHoldingOpen &&
-                            <form action="" className='px-4 py-4 space-y-4'>
+                            <form action="" className=' space-y-4'>
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Property Management Fee</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Property Management Fee</label>
+                                    <input type="text" className=' w-full py-1 px-2 bg-zinc-200 focus:outline-secondary rounded-md text-sm'
                                         value={formData.propertyManagementFee}
                                         onChange={(e) => setFormData({ ...formData, propertyManagementFee: e.target.value })}
                                     />
@@ -398,15 +399,15 @@ const Leftbar = () => {
 
                                 <div className='flex gap-2'>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Letting Fee</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Letting Fee</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.lettingFee}
                                             onChange={(e) => setFormData({ ...formData, lettingFee: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Vacancy Period (wks)</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Vacancy Period (wks)</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.vacancyWeeks}
                                             onChange={(e) => setFormData({ ...formData, vacancyWeeks: e.target.value })}
                                         />
@@ -414,8 +415,8 @@ const Leftbar = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="" className=' text-zinc-500'>Maintenance Costs</label>
-                                    <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                    <label htmlFor="" className=' text-xs text-secondary'>Maintenance Costs</label>
+                                    <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                         value={formData.maintenanceCosts}
                                         onChange={(e) => setFormData({ ...formData, maintenanceCosts: e.target.value })}
                                     />
@@ -423,15 +424,15 @@ const Leftbar = () => {
 
                                 <div className='flex gap-2'>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Council Rates</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Council Rates</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.councilRates}
                                             onChange={(e) => setFormData({ ...formData, councilRates: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Water Rates</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Water Rates</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.waterRates}
                                             onChange={(e) => setFormData({ ...formData, waterRates: e.target.value })}
                                         />
@@ -440,15 +441,15 @@ const Leftbar = () => {
 
                                 <div className='flex gap-2'>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Insurance</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Insurance</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.insurance}
                                             onChange={(e) => setFormData({ ...formData, insurance: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="" className=' text-zinc-500'>Land Tax</label>
-                                        <input type="text" className='rounded-sm border border-primary w-full py-2 px-2'
+                                        <label htmlFor="" className=' text-xs text-secondary'>Land Tax</label>
+                                        <input type="text" className=' w-full py-1 px-2 text-sm bg-zinc-200 focus:outline-secondary rounded-md'
                                             value={formData.landTax}
                                             onChange={(e) => setFormData({ ...formData, landTax: e.target.value })}
                                         />
