@@ -222,7 +222,7 @@ const PrincipalInterestLoan = () => {
                                                     {cat.subtitle?.map((sub, subIndex) => (
                                                         // <div key={subIndex} className='min-w-50 pl-4 flex items-center odd:bg-zinc-200 even:bg-zinc-100   h-10 text-sm font-light'
                                                         <div key={subIndex} className={`
-                                                            min-w-50 pl-4 flex items-center h-10 text-sm font-light
+                                                            min-w-40 md:min-w-50 pl-4 flex items-center h-10 text-sm font-light
                                                             ${cat.title === "Acquisition Costs" ? "bg-transparent text-primary -my-2" : subIndex % 2 === 0 ? "bg-zinc-200" : "bg-zinc-100"}
                                                         `}
                                                         >
@@ -667,12 +667,27 @@ const PrincipalInterestLoan = () => {
                                                                         {`${assumptions.depreciation}`}
                                                                     </span>
                                                                 </div>
-                                                                <input
-                                                                    type="number"
-                                                                    className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
-                                                                    onChange={(e) => handleChange("depreciation", e.target.value)}
-                                                                    placeholder="Depreciation"
-                                                                />
+                                                                <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
+                                                                    <div className="relative w-24">
+                                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                                                                            <span>$</span>
+                                                                            <span>
+                                                                                {`${assumptions.depreciation}`}
+                                                                            </span>
+                                                                        </div>
+                                                                        <input
+                                                                            type="number"
+                                                                            className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none "
+                                                                            value={assumptions.depreciation}
+                                                                            onChange={(e) => {
+                                                                                let value = Number(e.target.value);
+                                                                                if (value > 0) value = 0;
+                                                                                handleChange("depreciation", String(value));
+                                                                            }}
+                                                                            placeholder="Depreciation"
+                                                                        />
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
 

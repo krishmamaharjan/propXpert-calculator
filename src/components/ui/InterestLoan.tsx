@@ -77,7 +77,9 @@ const InterestLoan = () => {
     const capitalPresentEquity = Number(formData.propertyValue) - Number(formData.loanAmount);
 
     const handleChange = (key: keyof typeof assumptions, value: string) => {
-        // const numericValue = Number(value.replace(/[^0-9.]/g, "")) || 0
+        let numericValue = Number(value)
+
+        if (key === "depreciation" && numericValue > 0) numericValue = 0;
 
         setAssumptions({
             ...assumptions,
@@ -185,35 +187,18 @@ const InterestLoan = () => {
                                             {cat.title}
                                         </td>
                                     </tr>
-                                    {/* {cat.title === "Acquisition Costs" && (
-                                        <tr>
-                                            <td className="text-primary font-bold min-w-40 sticky left-0 z-30 bg-zinc-200 px-4">
-                                            
-                                            </td>
 
-                                            <td className="bg-zinc-200 text-center h-10">
-                                                ${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                            </td>
-
-                                            {Array.from({ length: loanYears }).map((_, i) => (
-                                                <td key={i} className="bg-zinc-200 h-10"></td>
-                                            ))}
-                                        </tr>
-                                    )} */}
                                     <tr className=''>
                                         <td className="p-0 sticky left-0 z-30 bg-white ">
                                             <div className="relative  py-4 pt-4  bg-white">
 
-                                                {/* <div className="absolute left-0 top-0 bottom-0 w-px bg-black" />
-                                            <div className="absolute right-0 top-0 bottom-0 w-px bg-black" /> */}
                                                 <tr>
                                                     <div className=" space-y-0">
                                                         {cat.subtitle?.map((sub, subIndex) => (
-                                                            // <div key={subIndex} className="min-w-50 pl-4 flex items-center odd:bg-zinc-200 even:bg-zinc-100   h-10 text-sm font-light">
                                                             <div
                                                                 key={subIndex}
                                                                 className={`
-                                                                min-w-50 pl-4 flex items-center h-10 text-sm font-light
+                                                                min-w-40 md:min-w-50 pl-4 flex items-center h-10 text-sm font-light
                                                                 ${cat.title === "Acquisition Costs" ? "bg-transparent text-secondary -my-2" : subIndex % 2 === 0 ? "bg-zinc-200" : "bg-zinc-100"}
                                                         `}
                                                             >
@@ -251,13 +236,6 @@ const InterestLoan = () => {
                                                 </div>
                                             )}
 
-                                            {/* <td className={cat.title === "Acquisition Costs" ? "bg-zinc-200 w-full" : ""}>
-                                                {cat.title === "Acquisition Costs" && (
-                                                    <div className='h-10 flex items-center justify-center w-full -mt-12'>
-                                                        <p>${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                                    </div>
-                                                )}
-                                            </td> */}
 
                                             <div>
                                                 {cat.title === "Capital Growth" && (
@@ -349,88 +327,18 @@ const InterestLoan = () => {
                                             const estimateEquity =
                                                 propertyValueYear - previousYearValue;
 
+                                            const totalInterestSaved = years.reduce((sum, year) => {
+                                                const effectiveLoan = Number(formData.loanAmount) - assumptions.offsetAmount;
+                                                const interestCharged = effectiveLoan * Number(formData.interestRate) / 100;
+                                                const interestWithoutOffset = Number(formData.loanAmount) * Number(formData.interestRate) / 100;
+                                                return sum + (interestWithoutOffset - interestCharged);
+                                            }, 0);
+
+
                                             return (
                                                 <td key={i} className={` w-24 py-2 text-center font-light `}>
 
-                                                    {/* {cat.title === "Key Assumptions" && (
-                                                        <div className='flex flex-col gap-3 mt-12 divide-y divide-gray-200 items-center justify-center space-x-10'>
 
-                                                            <div className="relative">
-
-                                                                <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
-
-                                                                    <span>{assumptions.capitalGrowthRate || "0.00"}</span>
-                                                                    <span>%</span>
-                                                                </div>
-                                                                <input
-                                                                    type="number"
-                                                                    className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
-
-                                                                    value={assumptions.capitalGrowthRate}
-                                                                    onChange={(e) => handleChange("capitalGrowthRate", e.target.value)}
-                                                                    placeholder="Cap Growth"
-                                                                />
-                                                            </div>
-
-                                                            <div className="relative w-24">
-
-                                                                <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
-
-                                                                    <span>{assumptions.rentalGrowthRate || "0.00"}</span>
-                                                                    <span>%</span>
-                                                                </div>
-                                                                <input
-                                                                    type="number"
-                                                                    className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
-
-                                                                    value={assumptions.rentalGrowthRate}
-                                                                    onChange={(e) => handleChange("rentalGrowthRate", e.target.value)}
-                                                                    placeholder="Rental Growth"
-                                                                />
-                                                            </div>
-
-
-                                                            <div className="relative w-24">
-
-                                                                <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
-
-                                                                    <span>{assumptions.inflationRate || "0.00"}</span>
-                                                                    <span>%</span>
-                                                                </div>
-
-                                                                <input
-                                                                    type="number"
-                                                                    className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
-                                                                    value={assumptions.inflationRate}
-                                                                    onChange={(e) =>
-                                                                        handleChange("inflationRate", e.target.value)
-                                                                    }
-                                                                    placeholder="0.00"
-                                                                />
-                                                            </div>
-
-
-                                                            <div className="relative w-24">
-
-                                                                <div className="pointer-events-none absolute inset-0 flex-items-center justify-center">
-                                                                    <span>$</span>
-                                                                    <span>{`${formData.income ? formData.income : assumptions.employmentIncome}`}</span>
-
-                                                                </div>
-
-                                                                <input
-                                                                    type="number"
-                                                                    className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
-                                                                    value={`$${formData.income ? formData.income : assumptions.employmentIncome}`}
-                                                                    onChange={(e) =>
-                                                                        handleChange("employmentIncome", e.target.value)
-                                                                    }
-                                                                    placeholder="0.00"
-                                                                />
-                                                            </div>
-
-                                                        </div>
-                                                    )} */}
 
                                                     {cat.title === "Key Assumptions" && (
                                                         <div className="flex flex-col">
@@ -443,7 +351,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent  focus:outline-none"
                                                                         value={assumptions.capitalGrowthRate}
                                                                         onChange={(e) =>
                                                                             handleChange("capitalGrowthRate", e.target.value)
@@ -460,7 +368,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none "
                                                                         value={assumptions.rentalGrowthRate}
                                                                         onChange={(e) =>
                                                                             handleChange("rentalGrowthRate", e.target.value)
@@ -477,7 +385,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none "
                                                                         value={assumptions.inflationRate}
                                                                         onChange={(e) =>
                                                                             handleChange("inflationRate", e.target.value)
@@ -497,7 +405,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none "
                                                                         onChange={(e) =>
                                                                             handleChange("employmentIncome", e.target.value)
                                                                         }
@@ -542,72 +450,9 @@ const InterestLoan = () => {
 
                                                     {/* offset */}
 
-                                                    {/* <div className="py-4 flex items-center justify-center bg-zinc-200 h-10 px-4">
-                                                                <div className="relative w-24">
-                                                                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                                                                        <span>{assumptions.capitalGrowthRate || "0.00"}%</span>
-                                                                    </div>
-                                                                    <input
-                                                                        type="number"
-                                                                        className="w-full border border-primary rounded-lg text-center bg-transparent text-transparent focus:outline-none"
-                                                                        value={assumptions.capitalGrowthRate}
-                                                                        onChange={(e) =>
-                                                                            handleChange("capitalGrowthRate", e.target.value)
-                                                                        }
-                                                                    />
-                                                                </div>
-                                                            </div> */}
-
-
-                                                    {/* {cat.title === "Cash Deduction" && (
-                                                        <div className='py-4 flex flex-col items-center justify-center bg-zinc-200 h-10 px-4 '>
-                                                            <div className="relative w-24">
-
-                                                                <div className="pointer-events-none absolute inset-0 flex items-center justify-cente">
-                                                                    <span>$</span>
-                                                                    <span>{assumptions.offsetAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || "0.00"}</span>
-
-                                                                </div>
-                                                                <input
-                                                                    type="number"
-                                                                    className="w-full border border-secondary py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
-
-                                                                    value={`${assumptions.offsetAmount}`}
-                                                                    onChange={(e) => handleChange("offsetAmount", e.target.value)}
-                                                                    placeholder="offsetvalue"
-                                                                />
-                                                            </div>
 
 
 
-                                                            <div className='px-4 '>
-                                                                <input
-                                                                    type="text"
-                                                                    className='w-24 border border-secondary rounded-lg py-1 text-center'
-                                                                    value={formData.interestRate + "%"}
-                                                                    onChange={(e) => handleChange("offsetAmount", e.target.value)}
-                                                                    placeholder="OA"
-                                                                />
-                                                            </div>
-
-                                                            <p className='mt-2'>${interestedCharge.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-
-                                                            <p className='mt-4'>${rentalExpensesYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-
-                                                            <p></p>
-
-                                                            <div className='px-4'>
-                                                                <input
-                                                                    type="text"
-                                                                    className='w-24 border border-secondary rounded-lg py-1 text-center'
-                                                                    value={`${assumptions.depreciation}`}
-                                                                    onChange={(e) => handleChange("depreciation", e.target.value)}
-                                                                    placeholder="Depreciation"
-                                                                />
-                                                            </div>
-
-                                                        </div>
-                                                    )} */}
 
                                                     {cat.title === "Cash Deduction" && (
                                                         <div className="flex flex-col">
@@ -621,7 +466,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none "
                                                                         value={`${assumptions.offsetAmount}`}
                                                                         onChange={(e) => handleChange("offsetAmount", e.target.value)}
                                                                         placeholder="offsetvalue"
@@ -636,7 +481,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none "
                                                                         value={assumptions.rentalGrowthRate}
                                                                         onChange={(e) => handleChange("offsetAmount", e.target.value)}
                                                                         placeholder="OA"
@@ -674,8 +519,13 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
-                                                                        onChange={(e) => handleChange("depreciation", e.target.value)}
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none "
+                                                                        value={assumptions.depreciation}
+                                                                        onChange={(e) => {
+                                                                            let value = Number(e.target.value);
+                                                                            if (value > 0) value = 0;
+                                                                            handleChange("depreciation", String(value));
+                                                                        }}
                                                                         placeholder="Depreciation"
                                                                     />
                                                                 </div>
@@ -688,46 +538,6 @@ const InterestLoan = () => {
 
 
                                                     {cat.title === "Estimate" && (
-                                                        // <div className='px-4 flex flex-col gap-5  mt-14 items-center justify-center'>
-
-
-                                                        //     <p className='h-10 w-full px-10 flex items-center bg-zinc-200'>${estimateEquity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-
-
-                                                        //     <input
-                                                        //         type="text"
-                                                        //         className='w-24 border border-blue-300 rounded-lg py-1 text-center'
-                                                        //         value={formData.interestRate + "%"}
-                                                        //         onChange={(e) => handleChange("offsetAmount", e.target.value)}
-                                                        //         placeholder="OA"
-                                                        //     />
-
-                                                        //     <div className='text-xs text-red-600 flex  gap-4'>
-                                                        //         <p className={BeforeTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}>
-                                                        //             ${BeforeTaxCashFlowWeek.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
-                                                        //             per week
-                                                        //         </p>
-                                                        //         <p
-                                                        //             className={BeforeTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}
-                                                        //         >${BeforeTaxCashFlowYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
-                                                        //             per year
-                                                        //         </p>
-                                                        //     </div>
-
-
-                                                        //     <div className='text-xs text-red-600 flex  gap-4'>
-                                                        //         <p className={AfterTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}>
-                                                        //             ${AfterTaxCashFlowWeek.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
-                                                        //             per week
-                                                        //         </p>
-                                                        //         <p
-                                                        //             className={AfterTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}
-                                                        //         >${AfterTaxCashFlowYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
-                                                        //             per year
-                                                        //         </p>
-                                                        //     </div>
-
-                                                        // </div>
 
                                                         <div>
                                                             <div className="py-4 flex items-center justify-center bg-zinc-200 h-10 text-sm text-green-500">
@@ -745,14 +555,17 @@ const InterestLoan = () => {
                                                                     <div className=" absolute inset-0 flex items-center justify-center text-green-600 text-sm">
                                                                         <span>$</span>
                                                                         <span>
-                                                                            {`${assumptions.depreciation}`}
+                                                                            {totalInterestSaved.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                                        </span>
+                                                                        <span>
+                                                                            {/* {`${assumptions.interestSaved}`} */}
                                                                         </span>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
 
-                                                            
+
 
                                                             <div className="flex items-center justify-center bg-zinc-200 h-10">
                                                                 <div className="relative w-24">

@@ -70,7 +70,7 @@ const Leftbar = () => {
     };
 
     return (
-        <div className='w-full h-full md:h-500 pb-4 md:pb-0 pt-12 space-y-4'>
+        <div className='w-full h-full  pb-4 md:pb-0 pt-12 space-y-4'>
             <div className={`p-4 space-y-2 border border-zinc-200 rounded-md mx-2  ${!propertyOpen ? "hover:bg-secondary/40" : ""}`}>
                 {/* <h1 className=' font-semibold'>Property Details</h1> */}
                 <div className=' rounded-xl'>
