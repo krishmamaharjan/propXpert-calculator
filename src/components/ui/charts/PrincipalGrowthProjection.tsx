@@ -87,7 +87,6 @@
 //     return <canvas ref={ref} />;
 // }
 
-
 "use client";
 
 import {
@@ -105,21 +104,25 @@ interface Props {
     propertyValues: number[];
 }
 
-export default function PGrowthProjectionChart({ years, propertyValues }: Props) {
-    // Map data into Recharts-friendly format
+export default function PGrowthProjectionChart({
+    years,
+    propertyValues,
+}: Props) {
+    // Prepare data safely
     const data = years.map((year, i) => ({
         year: `Year ${year}`,
-        propertyValue: propertyValues[i],
+        propertyValue: propertyValues?.[i] ?? 0,
     }));
 
     return (
         <ResponsiveContainer width="100%" height={350}>
             <AreaChart data={data} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
-                {/* Gradient fill */}
+                {/* Theme-based gradient (NO red / green) */}
                 <defs>
+                    {/* Property Value — Primary */}
                     <linearGradient id="propertyValue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#FDBA74" stopOpacity={0.35} />
-                        <stop offset="95%" stopColor="#FDBA74" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#032D5F" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#032D5F" stopOpacity={0} />
                     </linearGradient>
                 </defs>
 
@@ -130,22 +133,24 @@ export default function PGrowthProjectionChart({ years, propertyValues }: Props)
                         Math.abs(v) >= 1_000_000
                             ? `$${(v / 1_000_000).toFixed(1)}M`
                             : Math.abs(v) >= 1_000
-                                ? `$${(v / 1_000).toFixed(0)}K`
-                                : `$${v}`
+                            ? `$${(v / 1_000).toFixed(0)}K`
+                            : `$${v}`
                     }
                 />
 
                 <Tooltip
                     formatter={(value) =>
-                        typeof value === "number" ? `$${value.toLocaleString()}` : value
+                        typeof value === "number"
+                            ? `$${value.toLocaleString()}`
+                            : value
                     }
                 />
 
-                {/* Area chart for property value */}
+                {/* Area */}
                 <Area
                     type="monotone"
                     dataKey="propertyValue"
-                    stroke="#FDBA74"
+                    stroke="#032D5F"
                     fill="url(#propertyValue)"
                 />
             </AreaChart>

@@ -71,13 +71,13 @@ const Leftbar = () => {
 
     return (
         <div className='w-full h-full md:h-500 pb-4 md:pb-0 pt-12 space-y-4'>
-            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+            <div className={`p-4 space-y-2 border border-zinc-200 rounded-md mx-2  ${!propertyOpen ? "hover:bg-secondary/40" : ""}`}>
                 {/* <h1 className=' font-semibold'>Property Details</h1> */}
                 <div className=' rounded-xl'>
 
                     <div
                         onClick={() => setPropertyOpen(prev => !prev)}
-                        className='flex items-center justify-between text-black'
+                        className='flex items-center justify-between text-black cursor-pointer'
                     >
                         <h1 className='text-sm'>Property Details</h1>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6" /></svg>
@@ -171,10 +171,10 @@ const Leftbar = () => {
             </div>
 
 
-            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+            <div className={`p-4 space-y-2 border border-zinc-200 rounded-md mx-2 ${!IncomeOpen ? "hover:bg-secondary/40" : ""}`}>
                 {/* <h1 className='font-semibold'>Income</h1> */}
                 <div className=' rounded-xl '>
-                    <div className='flex items-center justify-between   text-sm text-black '
+                    <div className={`flex items-center justify-between   text-sm text-black cursor-pointer `}
                         onClick={() => setIncomeOpen(prev => !prev)}
 
                     >
@@ -213,10 +213,10 @@ const Leftbar = () => {
             
 
 
-            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+            <div className={`p-4 space-y-2 border border-zinc-200 rounded-md mx-2 ${!costOpen ? "hover:bg-secondary/40" : ""}`}>
                 {/* <h1 className='font-semibold'>Property Costs</h1> */}
                 <div className=' rounded-xl'>
-                    <div className='flex items-center justify-between   text-black text-sm '
+                    <div className='flex items-center justify-between   text-black text-sm cursor-pointer'
                         onClick={() => setCostOpen(prev => !prev)}
                     >
                         <h1 className='text-md'>Funding Structure</h1>
@@ -296,9 +296,9 @@ const Leftbar = () => {
 
             
 
-            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+            <div className={`p-4 space-y-2 border border-zinc-200 rounded-md mx-2 ${!acquisitionOpen ? "hover:bg-secondary/40" : ""}`}>
                 <div className=' rounded-xl'>
-                    <div className='flex items-center justify-between  text-sm text-black '
+                    <div className='flex items-center justify-between  text-sm text-black cursor-pointer'
                         onClick={() => setAcquisitionOpen(prev => !prev)}
                     >
                         <h1 className='text-md'>Acquisition Costs</h1>
@@ -378,9 +378,9 @@ const Leftbar = () => {
             
 
 
-            <div className='p-4 space-y-2 border border-zinc-200 rounded-md mx-2'>
+            <div className={`p-4 space-y-2 border border-zinc-200 rounded-md mx-2 ${!annualHoldingOpen ? "hover:bg-secondary/40" : ""}`}>
                 <div className=' rounded-xl'>
-                    <div className='flex items-center justify-between text-sm text-black '
+                    <div className='flex items-center justify-between text-sm text-black cursor-pointer'
                         onClick={() => setAnnualHoldingOpen(prev => !prev)}
                     >
                         <h1 className='text-md'>Annual Holding Costs</h1>

@@ -136,7 +136,6 @@
 //     return <canvas ref={canvasRef} />;
 // }
 
-
 "use client";
 
 import {
@@ -164,38 +163,41 @@ export default function PrincipalAreaChart({
     interest,
     totalPerformance,
 }: Props) {
-    // Prepare data in Recharts-friendly format
     const data = years.map((year, i) => ({
         year: `Year ${year}`,
-        beforeTax: beforeTax[i],
-        afterTax: afterTax[i],
-        interest: interest[i],
-        totalPerformance: totalPerformance[i],
+        beforeTax: beforeTax?.[i] ?? 0,
+        afterTax: afterTax?.[i] ?? 0,
+        interest: interest?.[i] ?? 0,
+        totalPerformance: totalPerformance?.[i] ?? 0,
     }));
 
     return (
         <ResponsiveContainer width="100%" height={350}>
             <AreaChart data={data} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
-                {/* Gradient fills */}
+                {/* Theme-based gradients (NO red / green) */}
                 <defs>
+                    {/* Before Tax — Primary */}
                     <linearGradient id="beforeTax" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#F97316" stopOpacity={0.35} />
-                        <stop offset="95%" stopColor="#F97316" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#032D5F" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#032D5F" stopOpacity={0} />
                     </linearGradient>
 
+                    {/* After Tax — Secondary */}
                     <linearGradient id="afterTax" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10B981" stopOpacity={0.35} />
-                        <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#0775B8" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#0775B8" stopOpacity={0} />
                     </linearGradient>
 
+                    {/* Interest — Muted Blue */}
                     <linearGradient id="interest" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#22C55E" stopOpacity={0.35} />
-                        <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#4FA3D1" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#4FA3D1" stopOpacity={0} />
                     </linearGradient>
 
+                    {/* Total Performance — Strong Primary */}
                     <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.35} />
-                        <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#021F45" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="#021F45" stopOpacity={0} />
                     </linearGradient>
                 </defs>
 
@@ -213,15 +215,40 @@ export default function PrincipalAreaChart({
 
                 <Tooltip
                     formatter={(value, name) =>
-                        typeof value === "number" ? [`$${value.toLocaleString()}`, name] : [value, name]
+                        typeof value === "number"
+                            ? [`$${value.toLocaleString()}`, name]
+                            : [value, name]
                     }
                 />
 
-                {/* Area charts for each dataset */}
-                <Area type="monotone" dataKey="beforeTax" stroke="#F97316" fill="url(#beforeTax)" />
-                <Area type="monotone" dataKey="afterTax" stroke="#10B981" fill="url(#afterTax)" />
-                <Area type="monotone" dataKey="interest" stroke="#22C55E" fill="url(#interest)" />
-                <Area type="monotone" dataKey="totalPerformance" stroke="#8B5CF6" fill="url(#total)" />
+                {/* Areas */}
+                <Area
+                    type="monotone"
+                    dataKey="beforeTax"
+                    stroke="#032D5F"
+                    fill="url(#beforeTax)"
+                />
+
+                <Area
+                    type="monotone"
+                    dataKey="afterTax"
+                    stroke="#0775B8"
+                    fill="url(#afterTax)"
+                />
+
+                <Area
+                    type="monotone"
+                    dataKey="interest"
+                    stroke="#4FA3D1"
+                    fill="url(#interest)"
+                />
+
+                <Area
+                    type="monotone"
+                    dataKey="totalPerformance"
+                    stroke="#021F45"
+                    fill="url(#total)"
+                />
             </AreaChart>
         </ResponsiveContainer>
     );

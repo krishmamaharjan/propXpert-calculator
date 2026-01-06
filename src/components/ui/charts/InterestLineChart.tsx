@@ -36,7 +36,7 @@ export default function InterestLineChart({
     return (
         <ResponsiveContainer width="100%" height={350}>
             <AreaChart data={data} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
-                <defs>
+                {/* <defs>
                     <linearGradient id="beforeTax" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#F97316" stopOpacity={0.35} />
                         <stop offset="95%" stopColor="#F97316" stopOpacity={0} />
@@ -55,6 +55,28 @@ export default function InterestLineChart({
                     <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.35} />
                         <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0} />
+                    </linearGradient>
+                </defs> */}
+
+                <defs>
+                    <linearGradient id="beforeTax" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#032D5F" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#032D5F" stopOpacity={0} />
+                    </linearGradient>
+
+                    <linearGradient id="afterTax" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#0775B8" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#0775B8" stopOpacity={0} />
+                    </linearGradient>
+
+                    <linearGradient id="interest" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#4FA3D1" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#4FA3D1" stopOpacity={0} />
+                    </linearGradient>
+
+                    <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#021F45" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="#021F45" stopOpacity={0} />
                     </linearGradient>
                 </defs>
 
@@ -80,7 +102,7 @@ export default function InterestLineChart({
                     }}
                 />
 
-                <Area
+                {/* <Area
                     type="monotone"
                     dataKey="beforeTax"
                     stroke="#F97316"
@@ -103,7 +125,36 @@ export default function InterestLineChart({
                     dataKey="totalPerformance"
                     stroke="#8B5CF6"
                     fill="url(#total)"
+                /> */}
+
+                <Area
+                    type="monotone"
+                    dataKey="beforeTax"
+                    stroke="#032D5F"
+                    fill="url(#beforeTax)"
                 />
+
+                <Area
+                    type="monotone"
+                    dataKey="afterTax"
+                    stroke="#0775B8"
+                    fill="url(#afterTax)"
+                />
+
+                <Area
+                    type="monotone"
+                    dataKey="interest"
+                    stroke="#4FA3D1"
+                    fill="url(#interest)"
+                />
+
+                <Area
+                    type="monotone"
+                    dataKey="totalPerformance"
+                    stroke="#021F45"
+                    fill="url(#total)"
+                />
+
             </AreaChart>
         </ResponsiveContainer>
     );

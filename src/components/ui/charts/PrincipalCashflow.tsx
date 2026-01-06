@@ -101,7 +101,6 @@
 //     return <canvas ref={ref} />;
 // }
 
-
 "use client";
 
 import {
@@ -125,26 +124,28 @@ export default function PCashflowProjectionChart({
     beforeTax,
     afterTax,
 }: Props) {
-    // Prepare data for Recharts
+    // Prepare data safely
     const data = years.map((year, i) => ({
         year: `Year ${year}`,
-        beforeTax: beforeTax[i],
-        afterTax: afterTax[i],
+        beforeTax: beforeTax?.[i] ?? 0,
+        afterTax: afterTax?.[i] ?? 0,
     }));
 
     return (
         <ResponsiveContainer width="100%" height={350}>
             <AreaChart data={data} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
-                {/* Gradient fills */}
+                {/* Theme-based gradients (NO red / green) */}
                 <defs>
+                    {/* Before Tax — Primary */}
                     <linearGradient id="beforeTax" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#FB923C" stopOpacity={0.35} />
-                        <stop offset="95%" stopColor="#FB923C" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#032D5F" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#032D5F" stopOpacity={0} />
                     </linearGradient>
 
+                    {/* After Tax — Secondary */}
                     <linearGradient id="afterTax" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#FDBA74" stopOpacity={0.35} />
-                        <stop offset="95%" stopColor="#FDBA74" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#0775B8" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#0775B8" stopOpacity={0} />
                     </linearGradient>
                 </defs>
 
@@ -155,20 +156,33 @@ export default function PCashflowProjectionChart({
                         Math.abs(v) >= 1_000_000
                             ? `$${(v / 1_000_000).toFixed(1)}M`
                             : Math.abs(v) >= 1_000
-                                ? `$${(v / 1_000).toFixed(0)}K`
-                                : `$${v}`
+                            ? `$${(v / 1_000).toFixed(0)}K`
+                            : `$${v}`
                     }
                 />
 
                 <Tooltip
                     formatter={(value, name) =>
-                        typeof value === "number" ? [`$${value.toLocaleString()}`, name] : [value, name]
+                        typeof value === "number"
+                            ? [`$${value.toLocaleString()}`, name]
+                            : [value, name]
                     }
                 />
 
-                {/* Area charts */}
-                <Area type="monotone" dataKey="beforeTax" stroke="#FB923C" fill="url(#beforeTax)" />
-                <Area type="monotone" dataKey="afterTax" stroke="#FDBA74" fill="url(#afterTax)" />
+                {/* Areas */}
+                <Area
+                    type="monotone"
+                    dataKey="beforeTax"
+                    stroke="#032D5F"
+                    fill="url(#beforeTax)"
+                />
+
+                <Area
+                    type="monotone"
+                    dataKey="afterTax"
+                    stroke="#0775B8"
+                    fill="url(#afterTax)"
+                />
             </AreaChart>
         </ResponsiveContainer>
     );

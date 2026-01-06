@@ -11,7 +11,7 @@ import DraggableTableWrapper from './Draggabletable'
 
 const categories = [
     {
-        title: "Key assumptions",
+        title: "Key Assumptions",
         subtitle: [
             "Capital Growth Rate",
             "Rental Growth Rate",
@@ -21,6 +21,7 @@ const categories = [
     },
     {
         title: "Acquisition Costs",
+        subtitle: [""]
     },
     {
         title: "Capital Growth",
@@ -157,16 +158,16 @@ const InterestLoan = () => {
 
     return (
         <div>
-            <div className='py-12 bg-background'>
+            <div className='bg-background'>
 
-                <div ref={tableWrapperRef} className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-x">
+                <div ref={tableWrapperRef} className="rounded-lg overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] snap-x">
 
-                    <table className='mt-4 min-w-full '>
+                    <table className='min-w-full sticky left-0 top-0 rounded-xl'>
                         <thead className='relative bg-primary text-white'>
                             <tr>
 
-                                <th className='sticky left-0 z-30  p-4 text-left bg-primary '>Year</th>
-                                <th className='p-2 text-left bg-primary text-white'>Present</th>
+                                <th className='sticky left-0 z-30  p-4  text-left bg-primary'>Year</th>
+                                <th className='p-2 text-center bg-primary text-white'>Present</th>
 
                                 {
                                     Array.from({ length: loanYears }, (_, i) => (
@@ -179,11 +180,26 @@ const InterestLoan = () => {
                         <tbody>
                             {categories.map((cat, index) => (
                                 <React.Fragment key={index}>
-                                    <tr className={cat.title === "Acquisition Costs" ? "bg-zinc-200" : ""}>
-                                        <td className="text-primary font-bold min-w-40 p-0 sticky left-0 z-30 bg-white ">
+                                    <tr >
+                                        <td className={`text-primary font-bold min-w-40 sticky left-0 z-30 bg-white px-4 ${cat.title === "Key Assumptions" ? "pt-4" : "pt:0"}`} >
                                             {cat.title}
                                         </td>
                                     </tr>
+                                    {/* {cat.title === "Acquisition Costs" && (
+                                        <tr>
+                                            <td className="text-primary font-bold min-w-40 sticky left-0 z-30 bg-zinc-200 px-4">
+                                            
+                                            </td>
+
+                                            <td className="bg-zinc-200 text-center h-10">
+                                                ${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                            </td>
+
+                                            {Array.from({ length: loanYears }).map((_, i) => (
+                                                <td key={i} className="bg-zinc-200 h-10"></td>
+                                            ))}
+                                        </tr>
+                                    )} */}
                                     <tr className=''>
                                         <td className="p-0 sticky left-0 z-30 bg-white ">
                                             <div className="relative  py-4 pt-4  bg-white">
@@ -193,8 +209,21 @@ const InterestLoan = () => {
                                                 <tr>
                                                     <div className=" space-y-0">
                                                         {cat.subtitle?.map((sub, subIndex) => (
-                                                            <div key={subIndex} className="min-w-50  flex items-center odd:bg-zinc-200 even:bg-secondary2   h-10">
-                                                                {sub}
+                                                            // <div key={subIndex} className="min-w-50 pl-4 flex items-center odd:bg-zinc-200 even:bg-zinc-100   h-10 text-sm font-light">
+                                                            <div
+                                                                key={subIndex}
+                                                                className={`
+                                                                min-w-50 pl-4 flex items-center h-10 text-sm font-light
+                                                                ${cat.title === "Acquisition Costs" ? "bg-transparent text-secondary -my-2" : subIndex % 2 === 0 ? "bg-zinc-200" : "bg-zinc-100"}
+                                                        `}
+                                                            >
+
+                                                                {cat.title === "Acquisition Costs"
+                                                                    ? `$${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                                                                    : sub
+
+                                                                }
+
                                                             </div>
                                                         ))}
                                                     </div>
@@ -206,33 +235,35 @@ const InterestLoan = () => {
 
 
                                         {/* Present value */}
-                                        <td className=''>
+                                        <td className='font-light'>
 
-                                            {cat.title === "Key assumptions" && (
+                                            {cat.title === "Key Assumptions" && (
                                                 <div className="flex flex-col">
                                                     {cat.subtitle?.map((_, subIndex) => (
                                                         <div
                                                             key={subIndex}
                                                             className={`
                                                 h-10
-                                                ${subIndex % 2 === 0 ? "bg-zinc-200" : "bg-secondary2"}
+                                                ${subIndex % 2 === 0 ? "bg-zinc-200" : "bg-zinc-100"}
                                             `}
                                                         />
                                                     ))}
                                                 </div>
                                             )}
 
-                                            {cat.title === "Acquisition Costs" && (
-                                                <div className='h-10 flex items-center justify-center '>
-                                                    <p>${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                                </div>
-                                            )}
+                                            {/* <td className={cat.title === "Acquisition Costs" ? "bg-zinc-200 w-full" : ""}>
+                                                {cat.title === "Acquisition Costs" && (
+                                                    <div className='h-10 flex items-center justify-center w-full -mt-12'>
+                                                        <p>${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                    </div>
+                                                )}
+                                            </td> */}
 
                                             <div>
                                                 {cat.title === "Capital Growth" && (
                                                     <div className='flex flex-col items-center justify-center'>
                                                         <p className='h-10 w-full px-10 flex items-center bg-zinc-200'>${Number(formData.propertyValue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                                        <p className='h-10 w-full px-10 flex items-center bg-secondary2'>${Number(formData.loanAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                        <p className='h-10 w-full px-10 flex items-center bg-zinc-100'>${Number(formData.loanAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                         <p className='h-10 w-full px-10 flex items-center bg-zinc-200'>${capitalPresentEquity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                     </div>
                                                 )}
@@ -256,7 +287,7 @@ const InterestLoan = () => {
                                                             key={subIndex}
                                                             className={`
                                                 h-10
-                                                ${subIndex % 2 === 0 ? "bg-zinc-200" : "bg-secondary2"}
+                                                ${subIndex % 2 === 0 ? "bg-zinc-200" : "bg-zinc-100"}
                                             `}
                                                         />
                                                     ))}
@@ -270,7 +301,7 @@ const InterestLoan = () => {
                                                             key={subIndex}
                                                             className={`
                                                                 h-10
-                                                                ${subIndex % 2 === 0 ? "bg-zinc-200" : "bg-secondary2"}
+                                                                ${subIndex % 2 === 0 ? "bg-zinc-200" : "bg-zinc-100"}
                                                             `}
                                                         />
                                                     ))}
@@ -319,9 +350,9 @@ const InterestLoan = () => {
                                                 propertyValueYear - previousYearValue;
 
                                             return (
-                                                <td key={i} className=' w-24 py-2 text-center'>
+                                                <td key={i} className={` w-24 py-2 text-center font-light `}>
 
-                                                    {/* {cat.title === "Key assumptions" && (
+                                                    {/* {cat.title === "Key Assumptions" && (
                                                         <div className='flex flex-col gap-3 mt-12 divide-y divide-gray-200 items-center justify-center space-x-10'>
 
                                                             <div className="relative">
@@ -401,18 +432,18 @@ const InterestLoan = () => {
                                                         </div>
                                                     )} */}
 
-                                                    {cat.title === "Key assumptions" && (
+                                                    {cat.title === "Key Assumptions" && (
                                                         <div className="flex flex-col">
 
                                                             {/* Capital Growth */}
-                                                            <div className="py-4 flex items-center justify-center bg-zinc-200 h-10 px-4">
+                                                            <div className="flex items-center justify-center bg-zinc-200 h-10 px-4">
                                                                 <div className="relative w-24">
                                                                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                                                                         <span>{assumptions.capitalGrowthRate || "0.00"}%</span>
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-blue-300 rounded-lg text-center bg-transparent text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
                                                                         value={assumptions.capitalGrowthRate}
                                                                         onChange={(e) =>
                                                                             handleChange("capitalGrowthRate", e.target.value)
@@ -422,14 +453,14 @@ const InterestLoan = () => {
                                                             </div>
 
                                                             {/* Rental Growth */}
-                                                            <div className="py-4 flex items-center justify-center bg-secondary2 h-10">
+                                                            <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
                                                                 <div className="relative w-24">
                                                                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                                                                         <span>{assumptions.rentalGrowthRate || "0.00"}%</span>
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-blue-200 rounded-lg text-center bg-transparent text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
                                                                         value={assumptions.rentalGrowthRate}
                                                                         onChange={(e) =>
                                                                             handleChange("rentalGrowthRate", e.target.value)
@@ -446,7 +477,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-blue-300 rounded-lg text-center bg-transparent text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
                                                                         value={assumptions.inflationRate}
                                                                         onChange={(e) =>
                                                                             handleChange("inflationRate", e.target.value)
@@ -456,7 +487,7 @@ const InterestLoan = () => {
                                                             </div>
 
                                                             {/* Employment Income */}
-                                                            <div className="py-4 flex items-center justify-center bg-secondary2 h-10">
+                                                            <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
                                                                 <div className="relative w-24">
                                                                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                                                                         <span>$</span>
@@ -466,7 +497,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-blue-300 rounded-lg text-center bg-transparent text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
                                                                         onChange={(e) =>
                                                                             handleChange("employmentIncome", e.target.value)
                                                                         }
@@ -477,26 +508,26 @@ const InterestLoan = () => {
                                                         </div>
                                                     )}
 
-                                                    {cat.title === "Acquisition Costs" && (
+                                                    {/* {cat.title === "Acquisition Costs" && (
                                                         <div className="flex flex-col">
                                                             {cat.subtitle?.map((_, subIndex) => (
                                                                 <div
                                                                     key={subIndex}
                                                                     className={`
                                                                 h-10
-                                                                ${subIndex % 2 === 0 ? "bg-zinc-200" : "bg-secondary2"}
+                                                                ${subIndex % 2 === 0 ? "bg-zinc-200" : "bg-zinc-100"}
                                                             `}
                                                                 />
                                                             ))}
                                                         </div>
-                                                    )}
+                                                    )} */}
 
 
                                                     {cat.title === "Capital Growth" && (
                                                         <div className='flex flex-col items-center justify-center'>
-                                                            <p className='h-10 w-full flex items-center bg-zinc-200'>${propertyValueYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                                            <p className='h-10 w-full flex items-center bg-secondary2'>${loanAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                                            <p className='h-10 w-full flex items-center bg-zinc-200'>${equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                            <p className='h-10 w-full flex items-center justify-center bg-zinc-200'>${propertyValueYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                            <p className='h-10 w-full flex items-center justify-center bg-zinc-100'>${loanAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                            <p className='h-10 w-full flex items-center justify-center bg-zinc-200'>${equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                         </div>
                                                     )}
 
@@ -518,7 +549,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-blue-300 rounded-lg text-center bg-transparent text-transparent focus:outline-none"
+                                                                        className="w-full border border-primary rounded-lg text-center bg-transparent text-transparent focus:outline-none"
                                                                         value={assumptions.capitalGrowthRate}
                                                                         onChange={(e) =>
                                                                             handleChange("capitalGrowthRate", e.target.value)
@@ -539,7 +570,7 @@ const InterestLoan = () => {
                                                                 </div>
                                                                 <input
                                                                     type="number"
-                                                                    className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+                                                                    className="w-full border border-secondary py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
 
                                                                     value={`${assumptions.offsetAmount}`}
                                                                     onChange={(e) => handleChange("offsetAmount", e.target.value)}
@@ -552,7 +583,7 @@ const InterestLoan = () => {
                                                             <div className='px-4 '>
                                                                 <input
                                                                     type="text"
-                                                                    className='w-24 border border-blue-300 rounded-lg py-1 text-center'
+                                                                    className='w-24 border border-secondary rounded-lg py-1 text-center'
                                                                     value={formData.interestRate + "%"}
                                                                     onChange={(e) => handleChange("offsetAmount", e.target.value)}
                                                                     placeholder="OA"
@@ -568,7 +599,7 @@ const InterestLoan = () => {
                                                             <div className='px-4'>
                                                                 <input
                                                                     type="text"
-                                                                    className='w-24 border border-blue-300 rounded-lg py-1 text-center'
+                                                                    className='w-24 border border-secondary rounded-lg py-1 text-center'
                                                                     value={`${assumptions.depreciation}`}
                                                                     onChange={(e) => handleChange("depreciation", e.target.value)}
                                                                     placeholder="Depreciation"
@@ -581,7 +612,7 @@ const InterestLoan = () => {
                                                     {cat.title === "Cash Deduction" && (
                                                         <div className="flex flex-col">
 
-                                                            <div className="py-4 flex items-center justify-center bg-zinc-200 h-10 px-4">
+                                                            <div className="flex items-center justify-center bg-zinc-200 h-10 px-4">
                                                                 <div className="relative w-24">
                                                                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                                                                         <span>$</span>
@@ -590,7 +621,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-blue-300 rounded-lg text-center bg-transparent text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
                                                                         value={`${assumptions.offsetAmount}`}
                                                                         onChange={(e) => handleChange("offsetAmount", e.target.value)}
                                                                         placeholder="offsetvalue"
@@ -598,14 +629,14 @@ const InterestLoan = () => {
                                                                 </div>
                                                             </div>
 
-                                                            <div className="py-4 flex items-center justify-center bg-secondary2 h-10">
+                                                            <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
                                                                 <div className="relative w-24">
                                                                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                                                                         <span>{formData.interestRate + "%"}</span>
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-blue-200 rounded-lg text-center bg-transparent text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
                                                                         value={assumptions.rentalGrowthRate}
                                                                         onChange={(e) => handleChange("offsetAmount", e.target.value)}
                                                                         placeholder="OA"
@@ -622,7 +653,7 @@ const InterestLoan = () => {
                                                                 </div>
                                                             </div>
 
-                                                            <div className="py-4 flex items-center justify-center bg-secondary2 h-10">
+                                                            <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
                                                                 <div className="relative w-24">
                                                                     <div className="absolute inset-0 flex items-center justify-center">
                                                                         ${rentalExpensesYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -643,7 +674,7 @@ const InterestLoan = () => {
                                                                     </div>
                                                                     <input
                                                                         type="number"
-                                                                        className="w-full border border-blue-300 rounded-lg text-center bg-transparent text-transparent focus:outline-none"
+                                                                        className="w-full border border-secondary rounded-full text-center  bg-white text-transparent focus:outline-none"
                                                                         onChange={(e) => handleChange("depreciation", e.target.value)}
                                                                         placeholder="Depreciation"
                                                                     />
@@ -699,7 +730,7 @@ const InterestLoan = () => {
                                                         // </div>
 
                                                         <div>
-                                                            <div className="py-4 flex items-center justify-center bg-zinc-200 h-10">
+                                                            <div className="py-4 flex items-center justify-center bg-zinc-200 h-10 text-sm text-green-500">
                                                                 <div className="relative w-24">
                                                                     <div className=" absolute inset-0 flex items-center justify-center">
                                                                         <p className='h-10 w-full flex items-center bg-zinc-200'>${estimateEquity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -709,9 +740,9 @@ const InterestLoan = () => {
                                                                 </div>
                                                             </div>
 
-                                                            <div className="py-4 flex items-center justify-center bg-secondary2 h-10">
+                                                            <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
                                                                 <div className="relative w-24">
-                                                                    <div className=" absolute inset-0 flex items-center justify-center">
+                                                                    <div className=" absolute inset-0 flex items-center justify-center text-green-600 text-sm">
                                                                         <span>$</span>
                                                                         <span>
                                                                             {`${assumptions.depreciation}`}
@@ -721,17 +752,19 @@ const InterestLoan = () => {
                                                                 </div>
                                                             </div>
 
+                                                            
+
                                                             <div className="flex items-center justify-center bg-zinc-200 h-10">
                                                                 <div className="relative w-24">
-                                                                    <div className="pointer-events-none absolute inset-0 flex gap-4 justify-center text-xs -mt-4">
+                                                                    <div className="pointer-events-none absolute inset-0 flex gap-2 w-full items-center justify-center text-xs ">
                                                                         <p className={BeforeTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}>
                                                                             ${BeforeTaxCashFlowWeek.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
-                                                                            <span className='text-[0.6rem]'>per week</span>
+                                                                            <span className='text-[0.5rem]'>per week</span>
                                                                         </p>
                                                                         <p
                                                                             className={BeforeTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}
                                                                         >${BeforeTaxCashFlowYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
-                                                                            <span className='text-[0.6rem]'>per year</span>
+                                                                            <span className='text-[0.5rem]'>per year</span>
                                                                         </p>
 
                                                                     </div>
@@ -739,22 +772,40 @@ const InterestLoan = () => {
                                                                 </div>
                                                             </div>
 
-                                                            <div className="py-4 flex items-center justify-center bg-secondary2 h-10">
+                                                            <div className="flex items-center justify-center bg-zinc-100 h-10">
                                                                 <div className="relative w-24">
-                                                                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-xs">
+                                                                    <div className="pointer-events-none absolute inset-0 flex gap-2 w-full items-center justify-center text-xs ">
                                                                         <p className={AfterTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}>
                                                                             ${AfterTaxCashFlowWeek.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
-                                                                            <span className='text-[0.6rem]'>per week</span>
+                                                                            <span className='text-[0.5rem]'>per week</span>
                                                                         </p>
                                                                         <p
                                                                             className={AfterTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}
                                                                         >${AfterTaxCashFlowYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
-                                                                            <span className='text-[0.6rem]'>per year</span>
+                                                                            <span className='text-[0.5rem]'>per year</span>
                                                                         </p>
+
                                                                     </div>
 
                                                                 </div>
                                                             </div>
+
+                                                            {/* <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
+                                                                <div className="relative w-42">
+                                                                    <div className="pointer-events-none absolute inset-0 flex gap-2 items-center justify-center text-xs">
+                                                                        <p className={AfterTaxCashFlowWeek < 0 ? 'text-red-600 w-full' : 'text-green-600 w-full'}>
+                                                                            ${AfterTaxCashFlowWeek.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
+                                                                            <span className='text-[0.5rem]'>per week</span>
+                                                                        </p>
+                                                                        <p
+                                                                            className={AfterTaxCashFlowWeek < 0 ? 'text-red-600 w-full' : 'text-green-600 full'}
+                                                                        >${AfterTaxCashFlowYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}  <br />
+                                                                            <span className='text-[0.5rem]'>per year</span>
+                                                                        </p>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div> */}
                                                         </div>
                                                     )}
 
@@ -806,10 +857,11 @@ const InterestLoan = () => {
                 </div> */}
 
 
-                <div className='mt-12'>
+                <div className='my-20'>
 
                     <InterestLineChart
                         years={years}
+
                         beforeTax={beforeTax}
                         afterTax={afterTax}
                         interest={interestArr}
@@ -818,7 +870,7 @@ const InterestLoan = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
                         <div>
-                            <h3 className="text-blue-500 font-semibold mb-2">
+                            <h3 className="text-primary font-semibold mb-2">
                                 Cashflow Projections
                             </h3>
                             <CashflowProjectionChart
@@ -829,12 +881,12 @@ const InterestLoan = () => {
                         </div>
 
                         <div>
-                            <h3 className="text-blue-500 font-semibold mb-2">
+                            <h3 className="text-primary font-semibold mb-2">
                                 Growth Projections
                             </h3>
                             <GrowthProjectionChart
                                 years={years}
-                                propertyValues={propertyValues}
+                                capitalGrowth={propertyValues}
                             />
                         </div>
                     </div>
