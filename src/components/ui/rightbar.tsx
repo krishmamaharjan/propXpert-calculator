@@ -27,7 +27,6 @@ const Rightbar = () => {
                 md:pt-12
                 md:sticky md:top-0
                 md:z-40'>
-
                 <div className='w-full md:w-1/2'>
                     <h1 className='text-3xl font-semibold'>Property Calculator</h1>
                     <p className='text-sm'>Estimate costs, returns, cash flow, and long-term growth to understand the true performance of your property investment.</p>
@@ -56,9 +55,9 @@ const Rightbar = () => {
                 </div> */}
 
                 <div className="relative flex w-full md:w-96 rounded-xl bg-zinc-100 p-1">
-                    {/* Sliding pill */}
+                   
                     <div
-                        className={`absolute top-1 bottom-1 left-0 w-1/2 rounded-lg transition-transform duration-200 ease-out
+                        className={`absolute z-0 top-1 bottom-1 left-0 w-1/2 rounded-lg transition-transform duration-200 ease-out
                     ${activeTab === 'interest' ? 'translate-x-0 bg-primary' : 'translate-x-full bg-secondary'}
                     `}
                     />
@@ -66,7 +65,7 @@ const Rightbar = () => {
                     {/* Buttons */}
                     <button
                         onClick={() => setActiveTab('interest')}
-                        className={`relative z-10 flex-1 text-xs  md:text-sm font-medium py-2 cursor-pointer text-center ${activeTab === 'interest' ? 'text-white' : 'text-black hover:text-primary'
+                        className={`relative flex-1 text-xs  md:text-sm font-medium py-2 cursor-pointer text-center ${activeTab === 'interest' ? 'text-white' : 'text-black hover:text-primary'
                             }`}
                     >
                         Interest Only Loan
@@ -74,7 +73,7 @@ const Rightbar = () => {
 
                     <button
                         onClick={() => setActiveTab('principal')}
-                        className={`relative z-10 flex-1 text-xs md:text-sm font-medium py-2 cursor-pointer text-center ${activeTab === 'principal' ? 'text-white' : 'text-black hover:text-secondary'
+                        className={`relative flex-1 text-xs md:text-sm font-medium py-2 cursor-pointer text-center ${activeTab === 'principal' ? 'text-white' : 'text-black hover:text-secondary'
                             }`}
                     >
                         Principal & Interest Loan
