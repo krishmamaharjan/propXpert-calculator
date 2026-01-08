@@ -22,7 +22,8 @@ const ClientPagePopup = ({ clientId, onClose }: Props) => {
     }, [messages]);
 
     return (
-        <div className="fixed bottom-4 right-0 md:right-20 mx-2  z-50 w-75  md:w-96 h-120 flex flex-col rounded-xl overflow-hidden bg-zinc-200">
+        // <div className="fixed bottom-4 right-0 md:right-20 mx-2  z-50 w-75  md:w-96 h-120 flex flex-col rounded-xl overflow-hidden bg-zinc-200">
+        <div className="fixed md:bottom-4 md:right-20  z-90  md:w-96 flex flex-col md:rounded-xl overflow-hidden bg-zinc-100 inset-0 md:inset-auto rounded-none">
 
             <div className="flex items-center justify-between px-4 py-2 bg-secondary text-white">
                 <span className="text-sm">Chat with PropExperts</span>
@@ -91,7 +92,7 @@ const ClientPagePopup = ({ clientId, onClose }: Props) => {
                 })}
             </div>
 
-            <div className="px-3 pb-3 bg-zinc-50">
+            <div className="px-3 pb-3 bg-zinc-100">
                 <ChatInputMessage onSend={sendMessage} />
             </div>
         </div>

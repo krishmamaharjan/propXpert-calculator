@@ -42,13 +42,15 @@ const Investor = () => {
 
                     </button>
 
+                    <div className='z-99999'>
+                        {openPopup && (
+                            <ClientPagePopup
+                                clientId={clientId}
+                                onClose={() => setOpenPopup(false)}
+                            />
+                        )}
+                    </div>
 
-                    {openPopup && (
-                        <ClientPagePopup
-                            clientId={clientId}
-                            onClose={() => setOpenPopup(false)}
-                        />
-                    )}
 
                 </div>
 
