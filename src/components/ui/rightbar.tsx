@@ -55,12 +55,22 @@ const Rightbar = () => {
                 </div> */}
 
                 <div className="relative flex w-full md:w-96 rounded-xl bg-zinc-100 p-1">
-                   
-                    <div
+
+                    {/* <div
                         className={`absolute z-0 top-1 bottom-1 left-0 w-1/2 rounded-lg transition-transform duration-200 ease-out
                     ${activeTab === 'interest' ? 'translate-x-0 bg-primary' : 'translate-x-full bg-secondary'}
                     `}
-                    />
+                    /> */}
+                    <div
+                        className={`
+                            absolute z-0 top-1 bottom-1 left-1 w-[calc(50%-0.25rem)]
+                            rounded-lg transition-all duration-200 ease-out
+                            ${activeTab === 'interest'
+                                                        ? 'translate-x-0 bg-primary'
+                                                        : 'translate-x-full bg-secondary'}
+                        `}
+                                            />
+
 
                     {/* Buttons */}
                     <button

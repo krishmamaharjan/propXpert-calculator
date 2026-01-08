@@ -395,7 +395,7 @@ const InterestLoan = () => {
                                                             </div>
 
                                                             {/* Employment Income */}
-                                                            <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
+                                                            {/* <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
                                                                 <div className="relative w-24">
                                                                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                                                                         <span>$</span>
@@ -411,7 +411,27 @@ const InterestLoan = () => {
                                                                         }
                                                                     />
                                                                 </div>
+                                                            </div> */}
+
+                                                            <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
+                                                                <div className="relative w-24 overflow-hidden">
+                                                                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                                                                        <span className="mr-0.5">$</span>
+                                                                        <span className="truncate max-w-full">
+                                                                            {formData.income || assumptions.employmentIncome}
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <input
+                                                                        type="number"
+                                                                        className="w-full border border-secondary rounded-full text-center bg-white text-transparent focus:outline-none"
+                                                                        onChange={(e) =>
+                                                                            handleChange("employmentIncome", e.target.value)
+                                                                        }
+                                                                    />
+                                                                </div>
                                                             </div>
+
 
                                                         </div>
                                                     )}
@@ -567,7 +587,7 @@ const InterestLoan = () => {
 
 
 
-                                                            <div className="flex items-center justify-center bg-zinc-200 h-10">
+                                                            {/* <div className="flex items-center justify-center bg-zinc-200 h-10">
                                                                 <div className="relative w-24">
                                                                     <div className="pointer-events-none absolute inset-0 flex gap-2 w-full items-center justify-center text-xs ">
                                                                         <p className={BeforeTaxCashFlowWeek < 0 ? 'text-red-600' : 'text-green-600'}>
@@ -601,7 +621,89 @@ const InterestLoan = () => {
                                                                     </div>
 
                                                                 </div>
+                                                            </div> */}
+
+                                                            <div className="bg-zinc-200 h-10 w-full overflow-hidden flex items-center px-1 min-w-0">
+                                                                <div className="flex items-center gap-4 min-w-0">
+
+                                                                    {/* WEEK */}
+                                                                    <div className="flex flex-col items-center leading-none min-w-0">
+                                                                        <p
+                                                                            className={`truncate whitespace-nowrap tabular-nums
+        text-[clamp(10px,2.5vw,12px)]
+        ${BeforeTaxCashFlowWeek < 0 ? "text-red-600" : "text-green-600"}`}
+                                                                        >
+                                                                            ${BeforeTaxCashFlowWeek.toLocaleString(undefined, {
+                                                                                minimumFractionDigits: 2,
+                                                                                maximumFractionDigits: 2,
+                                                                            })}
+                                                                        </p>
+                                                                        <span className={BeforeTaxCashFlowWeek < 0 ? 'text-red-600 text-[0.5rem]  whitespace-nowrap' : 'text-green-600 text-[0.5rem]  whitespace-nowrap'}>
+                                                                            per week
+                                                                        </span>
+                                                                    </div>
+
+                                                                    {/* YEAR */}
+                                                                    <div className="flex flex-col items-center leading-none min-w-0">
+                                                                        <p
+                                                                            className={`truncate whitespace-nowrap tabular-nums
+        text-[clamp(10px,2.5vw,12px)]
+        ${BeforeTaxCashFlowYear < 0 ? "text-red-600" : "text-green-600"}`}
+                                                                        >
+                                                                            ${BeforeTaxCashFlowYear.toLocaleString(undefined, {
+                                                                                minimumFractionDigits: 2,
+                                                                                maximumFractionDigits: 2,
+                                                                            })}
+                                                                        </p>
+                                                                        <span className={BeforeTaxCashFlowWeek < 0 ? 'text-red-600 text-[0.5rem]  whitespace-nowrap' : 'text-green-600 text-[0.5rem]  whitespace-nowrap'}>
+                                                                            per year
+                                                                        </span>
+                                                                    </div>
+
+                                                                </div>
                                                             </div>
+
+
+                                                            <div className="bg-zinc-100 h-10 w-full overflow-hidden flex items-center px-1 min-w-0">
+                                                                <div className="flex items-center gap-4 min-w-0">
+
+                                                                    {/* WEEK */}
+                                                                    <div className="flex flex-col items-center leading-none min-w-0">
+                                                                        <p
+                                                                            className={`truncate whitespace-nowrap tabular-nums
+        text-[clamp(10px,2.5vw,12px)]
+        ${BeforeTaxCashFlowWeek < 0 ? "text-red-600" : "text-green-600"}`}
+                                                                        >
+                                                                            ${BeforeTaxCashFlowWeek.toLocaleString(undefined, {
+                                                                                minimumFractionDigits: 2,
+                                                                                maximumFractionDigits: 2,
+                                                                            })}
+                                                                        </p>
+                                                                        <span className={AfterTaxCashFlowWeek < 0 ? 'text-red-600 text-[0.5rem]  whitespace-nowrap' : 'text-green-600 text-[0.5rem]  whitespace-nowrap'}>
+                                                                            per week
+                                                                        </span>
+                                                                    </div>
+
+                                                                    {/* YEAR */}
+                                                                    <div className="flex flex-col items-center leading-none min-w-0">
+                                                                        <p
+                                                                            className={`truncate whitespace-nowrap tabular-nums
+        text-[clamp(10px,2.5vw,12px)]
+        ${BeforeTaxCashFlowYear < 0 ? "text-red-600" : "text-green-600"}`}
+                                                                        >
+                                                                            ${BeforeTaxCashFlowYear.toLocaleString(undefined, {
+                                                                                minimumFractionDigits: 2,
+                                                                                maximumFractionDigits: 2,
+                                                                            })}
+                                                                        </p>
+                                                                        <span className={AfterTaxCashFlowWeek < 0 ? 'text-red-600 text-[0.5rem]  whitespace-nowrap' : 'text-green-600 text-[0.5rem]  whitespace-nowrap'}>
+                                                                            per year
+                                                                        </span>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
 
                                                             {/* <div className="py-4 flex items-center justify-center bg-zinc-100 h-10">
                                                                 <div className="relative w-42">

@@ -36,9 +36,9 @@ export function ChatInputMessage({ onSend }: ChatInputMessageProps) {
     };
 
     return (
-        <div className="flex justify-center  py-3 bg-zinc-100">
+        <div className="flex items-center justify-center  py-3">
             <div className="w-full max-w-7xl">
-                <div className="flex items-end gap-3 rounded-2xl border bg-white px-3 py-2">
+                <div className="flex items-center gap-3 rounded-2xl border bg-white px-3 py-2">
                     {/* <textarea
                         ref={textareaRef}
                         value={value}
